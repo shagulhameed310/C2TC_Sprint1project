@@ -43,16 +43,22 @@ public class CertificateController {
         Optional<Certificate> certificateOptional = certificateService.getCertificateById(id);
         if (certificateOptional.isPresent()) {
             Certificate certificate = certificateOptional.get();
+
             certificate.setName(certificateDetails.getName());
             certificate.setIssuer(certificateDetails.getIssuer());
             certificate.setIssueDate(certificateDetails.getIssueDate());
             certificate.setExpiryDate(certificateDetails.getExpiryDate());
+
+            certificate.setDescription(certificateDetails.getDescription());
+            certificate.setCertificateUrl(certificateDetails.getCertificateUrl());
+
             Certificate updatedCertificate = certificateService.updateCertificate(certificate);
             return ResponseEntity.ok(updatedCertificate);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // ✅ Delete certificate
     @DeleteMapping("/certificate/{id}")
